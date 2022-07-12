@@ -1,29 +1,42 @@
 import time
-number = 1000000
-counter = 0
+number = 100
 count_of_termin = []
-
 start_time = time.time()
 
-def chet(n):
-  return n/2
+def counter(func):
+    
+    def wrapper(*args, **kwargs):
+        wrapper.count += 1
+        return func(*args, **kwargs)    
+    wrapper.count = 0
+    return wrapper
 
-def notchet(n):
-  return n*3+1
+def kollatca(number):
+  #print(number)
+  
+  @counter
+  def karusel(x):    
+    
+    def chet(x):
+      return x/2
+    def notchet(x):
+      return x*3+1
 
-for i in range(2, number):
-
-  while i > 1: 
-    counter += 1  
-    if i % 2 == 0:
-      i = chet(i)      
+    x = [notchet(x), chet(x)][x % 2 == 0]
+    
+    if x == 1:
+      return karusel.count + 1
     else:
-      i = notchet(i)
+      return karusel(x)
+  
+  count_of_termin.append(karusel(number))
 
-  count_of_termin.append(counter+1)
-  counter = 0
+  if number == 1:
+    return max(count_of_termin)
+  else:
+     return kollatca(number - 1)
 
-print(max(count_of_termin))
+print(kollatca(number))
 
 print(f'Время выполнения {time.time() - start_time}')
 

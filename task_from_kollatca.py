@@ -1,27 +1,31 @@
 import time
 number = 1000000
-counter = 0
+
 count_of_termin = []
 
 start_time = time.time()
 
-def chet(n):
-  return n/2
+# def chet(n):
+#   return n/2
 
-def notchet(n):
-  return n*3+1
+# def notchet(n):
+#   return n*3+1
 
-for i in range(2, number):
+for i in range(1, number):
+  counter = []
 
-  while i > 1: 
-    counter += 1  
-    if i % 2 == 0:
-      i = chet(i)      
+  def karusel(x): 
+     
+    x = [x*3+1,x/2][x % 2 == 0]
+    counter.append(None)
+
+
+    if x == 1:
+      return len(counter)
     else:
-      i = notchet(i)
+      return karusel(x)
 
-  count_of_termin.append(counter+1)
-  counter = 0
+  count_of_termin.append(karusel(i)+1)
 
 print(max(count_of_termin))
 

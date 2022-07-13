@@ -1,34 +1,27 @@
 import time
-number = 1000000
 
+number = 1_000_000
 count_of_termin = []
-
 start_time = time.time()
+count_of_termin_dict = {}
 
-# def chet(n):
-#   return n/2
+for i in range(1, number)[-1:int(number - (number/5)):-1]:
 
-# def notchet(n):
-#   return n*3+1
-
-for i in range(1, number):
   counter = []
 
   def karusel(x): 
      
-    x = [x*3+1,x/2][x % 2 == 0]
+    x = [x * 3 + 1, x / 2][x % 2 == 0]
     counter.append(None)
 
-
     if x == 1:
-      return len(counter)
+      return len(counter)+1
     else:
       return karusel(x)
 
-  count_of_termin.append(karusel(i)+1)
+  count_of_termin_dict[karusel(i)] = i
 
-print(max(count_of_termin))
-
+print(f'Число - {count_of_termin_dict[max(count_of_termin_dict)]} терминов - {max(count_of_termin_dict)}')
 print(f'Время выполнения {time.time() - start_time}')
 
 

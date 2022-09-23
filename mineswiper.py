@@ -16,7 +16,14 @@ class GamePole:
         self.create_mine_field()
 
     def show(self):
-        print(self.pole)
+        
+        for i in self.pole:
+            for j in i:
+                if j.fl_open == False:
+                    print('#', end=' ')
+                else:
+                    print(j.mine, end = ' ')
+            print()
 
     def mine_generator(self):
 
@@ -35,17 +42,26 @@ class GamePole:
             for j in range(self.N):
                 self.pole[i][j] = Cell(mine=next(self.gen_mines))
 
+        self.count_mines_around()
+
     def count_mines_around(self):
 
-        self.pole
+        self.biger_field = [[0]*(self.N+2) for i in range(self.N+2)]
+
+        for i in range(self.N):
+            for j in range(self.N):
+                self.biger_field[i+1][j+1] = int(self.pole[i][j].mine)
+
+        for i in range(1, self.N+1):
+            for j in range(1, self.N+1):
+                self.pole[i-1][j-1].around_mines = sum([self.biger_field[i][j], self.biger_field[i][j+1], self.biger_field[i][j-1],
+                                                        self.biger_field[i+1][j], self.biger_field[i+1][j+1], self.biger_field[i+1][j-1],
+                                                        self.biger_field[i-1][j], self.biger_field[i-1][j+1], self.biger_field[i-1][j-1]])
 
 
-#c1 = Cell(around_mines, mine)
-pole_game = GamePole(5, 10)
 
-for i in pole_game.pole:
-    for j in i:
-        print(j.mine, end=' ')
-    print() 
 
-# print(*pole_game.gen_mines)
+pole_game = GamePole(10, 12)
+pole_game.show()
+
+
